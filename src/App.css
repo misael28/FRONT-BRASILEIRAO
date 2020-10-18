@@ -1,0 +1,99 @@
+.header {
+  background-color: #2b7148;
+  color: white;
+  height: 4em;
+}
+
+.cabecalho {
+  height: 4em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cabecalho button {
+  color: white;
+  background-color: darkblue;
+  border: 0;
+  width: 10em;
+  height: 2.2em;
+  border-radius: 5px;
+}
+
+.cabecalho input {
+  width: 14em;
+  height: 2.4em;
+}
+
+.cabecalho-login label {
+  margin: 1em;
+}
+
+.cabecalho-login button {
+  margin: 1em;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.content .rodadas {
+  padding-right: 20em;
+}
+
+.rodadas-cabecalho {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 3em;
+  width: 25em;
+  background-color: #2b7148;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.rodadas-cabecalho button {
+  border: 0;
+}
+
+.rodadas-cabecalho button img {
+  width: 0.2em;
+  height: 0.2em;
+}
+
+.rodadas-conteudo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 26em;
+  width: 25em;
+  background-color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.jogos {
+  width: 25em;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 0.2em;
+}
+
+.jogos li {
+  width: 25em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: -1.1em;
+}
+
+body {
+  background-color: rgb(236, 235, 220);
+}
+
+ul {
+  list-style-type: none;
+}
