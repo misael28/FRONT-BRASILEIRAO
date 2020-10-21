@@ -40,7 +40,7 @@
 }
 
 .content .rodadas {
-  padding-right: 20em;
+  padding-right: 1em;
 }
 
 .rodadas-cabecalho {
@@ -56,18 +56,18 @@
 
 .rodadas-cabecalho button {
   border: 0;
+  background-color: transparent;
 }
 
 .rodadas-cabecalho button img {
-  width: 0.2em;
-  height: 0.2em;
+  width: 4em;
 }
 
 .rodadas-conteudo {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  height: 26em;
+  height: 37em;
   width: 25em;
   background-color: white;
   font-weight: bold;
@@ -75,7 +75,7 @@
 }
 
 .jogos {
-  width: 25em;
+  width: 22em;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -85,15 +85,60 @@
 .jogos li {
   width: 25em;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: -1.1em;
+  justify-content: space-between;
 }
 
+.jogos li img{
+	width: 3.3em;
+	height: 3.1em;
+}
 body {
   background-color: rgb(236, 235, 220);
 }
 
 ul {
   list-style-type: none;
+}
+
+.classifica-header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 3em;
+  width: 30em;
+  background-color: #2b7148;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.classifica-header button {
+  border: 0;
+  background-color: transparent;
+}
+
+.classifica-lista {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28em;
+  width: 30em;
+  background-color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.classifca-lista-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  width: 30em;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.classifca-lista-conteudo li {
+  display: flex;
+  width: 30em;
+  justify-content: space-around;
+  align-items: center;
+  padding-right: 1em;
 }
