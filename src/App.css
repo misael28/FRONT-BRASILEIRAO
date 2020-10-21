@@ -105,10 +105,10 @@ ul {
   justify-content: space-evenly;
   align-items: center;
   height: 3em;
-  width: 30em;
+  width: 33.4em;
   background-color: #2b7148;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .classifica-header button {
@@ -142,3 +142,15 @@ ul {
   align-items: center;
   padding-right: 1em;
 }
+
+.classifca-lista-conteudo li img{
+	width: 1.3em;
+	height: 1.1em;
+	margin-right: 1em;
+}
+
+.classifca-lista-conteudo li .indice-posicao{
+	font-size: 20px;
+
+}
+
