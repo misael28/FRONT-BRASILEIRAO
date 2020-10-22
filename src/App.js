@@ -129,27 +129,18 @@ function App() {
   const [avancar, setAvancar] = React.useState(1);
   const [colunaOrdenada, setColunaOrdenada] = React.useState("pontos");
   const [ordem, setOrdem] = React.useState("ascendente");
+  const [token, setToken] = React.useState("");
 
   /**
    * Chamando a API
    */
   //tabela de classificação
   React.useEffect(() => {
-   
     fetch("http://localhost:2020/classificacao")
       .then((res) => res.json())
       .then((dados) => {
         setTabela(dados.dados);
       });
-    {
-      /*fazerRequisicaoComBody(
-      "https://localhost:2020/classificacao",
-      "GET",
-      conteudo,
-      token
-	);
-	*/
-    }
   }, []);
 
   React.useEffect(() => {
@@ -183,13 +174,38 @@ function App() {
           <div>
             <h1>Brasileirão</h1>
           </div>
-          <div className="cabecalho-login">
+          {!token ? (<div className="cabecalho-login">
             <label>Email</label>
-            <input />
+            <input type="text" name="email" id="email" />
             <label>Senha</label>
-            <input />
-            <button>Logar</button>
-          </div>
+            <input type="password" name="senha" id="senha" />
+            <button
+              onClick={() => {
+                const email = document.querySelector("#email").value;
+                const senha = document.querySelector("#senha").value;
+                const conteudo = {
+                  email: email,
+                  password: senha,
+                };
+                fazerRequisicaoComBody(
+                  "http://localhost:2020/auth",
+                  "POST",
+                  conteudo
+                )
+                  .then((res) => res.json())
+                  .then((dados) => {
+                    localStorage.setItem(
+                      "token",
+                      JSON.stringify(dados.dados.token)
+                    );
+                    setToken(localStorage.getItem("token"));
+                  });
+              }}
+            >
+              Logar
+            </button>
+          </div>) : <button>
+			  Logado </button>}
         </div>
       </header>
       <div className="content">
@@ -257,10 +273,6 @@ function App() {
             </ul>
           </div>
         </div>
-        {/*   brasao = escudos.filter(
-                      (item) => item.nomeEscudo === partida.time_casa
-                );*/}
-
         <div className="classifica">
           <div className="classifica-header">
             <label>Posição</label>
