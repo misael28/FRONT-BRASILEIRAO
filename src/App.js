@@ -2,7 +2,8 @@ import React from "react";
 import "./App.css";
 const arrow_left = require("./arrow_left.svg");
 const arrow_right = require("./arrow_right.svg");
-const arrow_sort = require("./arrow_sort.svg");
+const pen = require("./pen.svg");
+const check = require("./check.svg");
 let brasaoCasa = [];
 let brasaoVis = [];
 let brasao = [];
@@ -130,17 +131,42 @@ function App() {
   const [colunaOrdenada, setColunaOrdenada] = React.useState("pontos");
   const [ordem, setOrdem] = React.useState("ascendente");
   const [token, setToken] = React.useState("");
+  const [idJogo, setidJogo] = React.useState(0);
+  const [golsCasa, setgolsCasa] = React.useState(undefined);
+  const [golsVisitante, setgolsVisitante] = React.useState(undefined);
 
   /**
    * Chamando a API
    */
   //tabela de classificação
+
+  const salvarPlacar = async (idJogo, golsCasa, golsVisitante) => {
+    const conteudo = {
+      id: idJogo,
+      gols_casa: golsCasa,
+      gols_visitante: golsVisitante,
+    };
+   
+    const requisao = await fazerRequisicaoComBody(
+      "http://localhost:2020/jogos",
+      "PUT",
+      conteudo,
+      token
+    );
+
+    const resposta = await requisao.json();
+    
+  };
+
   React.useEffect(() => {
     fetch("http://localhost:2020/classificacao")
       .then((res) => res.json())
       .then((dados) => {
         setTabela(dados.dados);
       });
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+    }
   }, []);
 
   React.useEffect(() => {
@@ -174,38 +200,47 @@ function App() {
           <div>
             <h1>Brasileirão</h1>
           </div>
-          {!token ? (<div className="cabecalho-login">
-            <label>Email</label>
-            <input type="text" name="email" id="email" />
-            <label>Senha</label>
-            <input type="password" name="senha" id="senha" />
+          {!token ? (
+            <div className="cabecalho-login">
+              <label>Email</label>
+              <input type="text" name="email" id="email" />
+              <label>Senha</label>
+              <input type="password" name="senha" id="senha" />
+              <button
+                onClick={() => {
+                  const email = document.querySelector("#email").value;
+                  const senha = document.querySelector("#senha").value;
+                  const conteudo = {
+                    email: email,
+                    password: senha,
+                  };
+                  fazerRequisicaoComBody(
+                    "http://localhost:2020/auth",
+                    "POST",
+                    conteudo
+                  )
+                    .then((res) => res.json())
+                    .then((dados) => {
+                      localStorage.setItem(
+                        "token",
+                        JSON.stringify(dados.dados.token)
+                      );
+                      setToken(dados.dados.token);
+                    });
+                }}
+              >
+                Logar
+              </button>
+            </div>
+          ) : (
             <button
               onClick={() => {
-                const email = document.querySelector("#email").value;
-                const senha = document.querySelector("#senha").value;
-                const conteudo = {
-                  email: email,
-                  password: senha,
-                };
-                fazerRequisicaoComBody(
-                  "http://localhost:2020/auth",
-                  "POST",
-                  conteudo
-                )
-                  .then((res) => res.json())
-                  .then((dados) => {
-                    localStorage.setItem(
-                      "token",
-                      JSON.stringify(dados.dados.token)
-                    );
-                    setToken(localStorage.getItem("token"));
-                  });
+                setToken("");
               }}
             >
-              Logar
+              Deslogar{" "}
             </button>
-          </div>) : <button>
-			  Logado </button>}
+          )}
         </div>
       </header>
       <div className="content">
@@ -256,9 +291,38 @@ function App() {
                           title={partida.time_casa}
                         />
                       </div>
-                      <div>
-                        {partida.gols_casa} x {partida.gols_visitante}
+                      <div className="placar-logado">
+                        {token && idJogo === partida.id ? (
+                          <div>
+                            <input
+                              type="text"
+                              id={partida.id}
+                              defaultValue={partida.gols_casa}
+                              value={golsCasa}
+                              onChange={(event) => {
+                                setgolsCasa(event.target.value);
+                              }}
+                            />
+                            <div>x</div>
+                            <input
+                              type="text"
+                              id={partida.id}
+                              defaultValue={partida.gols_visitante}
+                              value={golsVisitante}
+                              onChange={(event) => {
+                                setgolsVisitante(event.target.value);
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="placar">
+                            <div>{partida.gols_casa}</div>
+                            <div>x</div>
+                            <div>{partida.gols_visitante}</div>
+                          </div>
+                        )}
                       </div>
+
                       <div>
                         <img
                           src={brasaoVis}
@@ -266,6 +330,32 @@ function App() {
                           title={partida.time_visitante}
                         />
                       </div>
+
+                      {token &&
+                        (idJogo === partida.id ? (
+                          <div className="check">
+                            <button
+                              onClick={() => {
+                                salvarPlacar(idJogo, golsCasa, golsVisitante);
+                                setidJogo(0);
+                              }}
+                            >
+                              <img src={check} />
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="editar">
+                            <button
+                              onClick={() => {
+                                setidJogo(partida.id);
+                                setgolsCasa(partida.gols_casa);
+                                setgolsVisitante(partida.gols_visitante);
+                              }}
+                            >
+                              <img src={pen} />
+                            </button>
+                          </div>
+                        ))}
                     </li>
                   )
                 )

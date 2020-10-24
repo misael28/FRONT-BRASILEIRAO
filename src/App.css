@@ -88,10 +88,30 @@
   justify-content: space-between;
 }
 
-.jogos li img{
-	width: 3.3em;
-	height: 3.1em;
+.jogos li img {
+  width: 3.3em;
+  height: 3.1em;
 }
+
+.jogos li input {
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  border-radius: 1em;
+}
+
+.jogos li .placar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+.jogos li .placar-logado {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
 body {
   background-color: rgb(236, 235, 220);
 }
@@ -143,14 +163,23 @@ ul {
   padding-right: 1em;
 }
 
-.classifca-lista-conteudo li img{
-	width: 1.3em;
-	height: 1.1em;
-	margin-right: 1em;
+.classifca-lista-conteudo li img {
+  width: 1.3em;
+  height: 1.1em;
+  margin-right: 1em;
 }
 
-.classifca-lista-conteudo li .indice-posicao{
-	font-size: 20px;
-
+.classifca-lista-conteudo li .indice-posicao {
+  font-size: 20px;
 }
 
+.editar button,
+.check button {
+  background-color: transparent;
+  border: 0;
+}
+
+.editar img,
+.check img {
+  width: 1em;
+}
