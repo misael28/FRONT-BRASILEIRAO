@@ -7,89 +7,13 @@ const check = require("./check.svg");
 let brasaoCasa = [];
 let brasaoVis = [];
 let brasao = [];
+let escudos = []
 
-const escudos = [
-  {
-    nomeEscudo: "Flamengo",
-    url: "https://www.escudosfc.com.br/images/fla.png",
-  },
-  {
-    nomeEscudo: "Santos",
-    url: "https://www.escudosfc.com.br/images/santos.png",
-  },
-  {
-    nomeEscudo: "Palmeiras",
-    url: "https://www.escudosfc.com.br/images/palmeiras.png",
-  },
-  {
-    nomeEscudo: "Grêmio",
-    url: "https://www.escudosfc.com.br/images/gremio.png",
-  },
-  {
-    nomeEscudo: "Athletico-PR",
-    url: "https://www.escudosfc.com.br/images/atlpr.png",
-  },
-  {
-    nomeEscudo: "São Paulo",
-    url: "https://www.escudosfc.com.br/images/saopaulo.png",
-  },
-  {
-    nomeEscudo: "Inter-RS",
-    url: "https://www.escudosfc.com.br/images/interrs.png",
-  },
-  {
-    nomeEscudo: "Corinthians",
-    url: "https://www.escudosfc.com.br/images/corinthians.png",
-  },
-  {
-    nomeEscudo: "Fortaleza",
-    url: "https://www.escudosfc.com.br/images/fortaleza.png",
-  },
-  {
-    nomeEscudo: "Goiás",
-    url: "https://www.escudosfc.com.br/images/goias.png",
-  },
-  {
-    nomeEscudo: "Bahia",
-    url: "https://www.escudosfc.com.br/images/bahia.png",
-  },
-  {
-    nomeEscudo: "Vasco",
-    url: "https://www.escudosfc.com.br/images/vasco.png",
-  },
-  {
-    nomeEscudo: "Atlético-MG",
-    url: "https://www.escudosfc.com.br/images/atletico.png",
-  },
-  {
-    nomeEscudo: "Botafogo",
-    url: "https://www.escudosfc.com.br/images/botafogo.gif",
-  },
-  {
-    nomeEscudo: "Fluminense",
-    url: "https://www.escudosfc.com.br/images/fluminense.png",
-  },
-  {
-    nomeEscudo: "Ceará",
-    url: "https://www.escudosfc.com.br/images/ceara.png",
-  },
-  {
-    nomeEscudo: "Cruzeiro",
-    url: "https://www.escudosfc.com.br/images/cruzeiro.png",
-  },
-  {
-    nomeEscudo: "CSA",
-    url: "https://www.escudosfc.com.br/images/csa.png",
-  },
-  {
-    nomeEscudo: "Chapecoense",
-    url: "https://www.escudosfc.com.br/images/chapeco.png",
-  },
-  {
-    nomeEscudo: "Avaí",
-    url: "https://www.escudosfc.com.br/images/avai.gif",
-  },
-];
+fetch("http://localhost:2020/escudos")
+.then((res) => res.json())
+.then((dados) => {
+  escudos = dados.dados;
+});
 
 const colunas = [
   "nome",
@@ -136,9 +60,18 @@ function App() {
   const [golsVisitante, setgolsVisitante] = React.useState(undefined);
 
   /**
-   * Chamando a API
-   */
-  //tabela de classificação
+   * Chamando a API - BRASILEIRAO 
+   * Feita por Misael - 17/10/2020
+   * 7 meses de isolamento social... 
+   * Ninguém tá aguentando mais essa COVID-19
+   * Este front consome as seguintes informações da API
+   * tabela de classificação,
+   * tabela de jogos
+   * tabela de escudos de cada time
+   * tabela de jogos por rodada
+   * autenticação e senha
+   * alteração de placares dos jogos de cada rodada
+   * */
 
   const salvarPlacar = async (idJogo, golsCasa, golsVisitante) => {
     const conteudo = {
@@ -275,11 +208,11 @@ function App() {
               {rodadas.map(
                 (partida) => (
                   escudos.forEach((element) => {
-                    if (element.nomeEscudo === partida.time_casa) {
-                      brasaoCasa = element.url;
+                    if (element.nome_time === partida.time_casa) {
+                      brasaoCasa = element.link_figura;
                     }
-                    if (element.nomeEscudo === partida.time_visitante) {
-                      brasaoVis = element.url;
+                    if (element.nome_time === partida.time_visitante) {
+                      brasaoVis = element.link_figura;
                     }
                   }),
                   (
@@ -293,7 +226,7 @@ function App() {
                       </div>
                       <div className="placar-logado">
                         {token && idJogo === partida.id ? (
-                          <div>
+                          <div className="placar-logado-1">
                             <input
                               type="text"
                               id={partida.id}
@@ -394,8 +327,8 @@ function App() {
               {dadosOrdenados.map(
                 (time, i) => (
                   escudos.forEach((element) => {
-                    if (element.nomeEscudo === time.nome) {
-                      brasao = element.url;
+                    if (element.nome_time === time.nome) {
+                      brasao = element.link_figura;
                     }
                   }),
                   (
