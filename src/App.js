@@ -7,13 +7,13 @@ const check = require("./check.svg");
 let brasaoCasa = [];
 let brasaoVis = [];
 let brasao = [];
-let escudos = []
+let escudos = [];
 
 fetch("http://localhost:2020/escudos")
-.then((res) => res.json())
-.then((dados) => {
-  escudos = dados.dados;
-});
+  .then((res) => res.json())
+  .then((dados) => {
+    escudos = dados.dados;
+  });
 
 const colunas = [
   "nome",
@@ -60,9 +60,9 @@ function App() {
   const [golsVisitante, setgolsVisitante] = React.useState(undefined);
 
   /**
-   * Chamando a API - BRASILEIRAO 
+   * Chamando a API - BRASILEIRAO
    * Feita por Misael - 17/10/2020
-   * 7 meses de isolamento social... 
+   * 7 meses de isolamento social...
    * Ninguém tá aguentando mais essa COVID-19
    * Este front consome as seguintes informações da API
    * tabela de classificação,
@@ -79,7 +79,7 @@ function App() {
       gols_casa: golsCasa,
       gols_visitante: golsVisitante,
     };
-   
+
     const requisao = await fazerRequisicaoComBody(
       "http://localhost:2020/jogos",
       "PUT",
@@ -88,7 +88,6 @@ function App() {
     );
 
     const resposta = await requisao.json();
-    
   };
 
   React.useEffect(() => {
@@ -97,10 +96,13 @@ function App() {
       .then((dados) => {
         setTabela(dados.dados);
       });
-    if (localStorage.getItem("token")) {
+    {
+      /*     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
     }
-  }, []);
+*/
+    }
+  }, [tabela]);
 
   React.useEffect(() => {
     fetch(`http://localhost:2020/jogos/${avancar}`)
@@ -131,7 +133,7 @@ function App() {
       <header className="header">
         <div className="cabecalho">
           <div>
-            <h1>Brasileirão</h1>
+            <h1>Brasileirão 2019</h1>
           </div>
           {!token ? (
             <div className="cabecalho-login">
@@ -171,7 +173,7 @@ function App() {
                 setToken("");
               }}
             >
-              Deslogar{" "}
+              Sair{" "}
             </button>
           )}
         </div>
@@ -236,7 +238,7 @@ function App() {
                                 setgolsCasa(event.target.value);
                               }}
                             />
-                            <div>x</div>
+                            <div> x </div>
                             <input
                               type="text"
                               id={partida.id}
@@ -271,6 +273,9 @@ function App() {
                               onClick={() => {
                                 salvarPlacar(idJogo, golsCasa, golsVisitante);
                                 setidJogo(0);
+                                setTabela(tabela);
+                                setgolsCasa(golsCasa);
+                                setgolsVisitante(golsVisitante);
                               }}
                             >
                               <img src={check} />
@@ -296,34 +301,38 @@ function App() {
             </ul>
           </div>
         </div>
+
         <div className="classifica">
-          <div className="classifica-header">
-            <label>Posição</label>
-            {colunas.map((coluna) => (
-              <label>
-                {legenda[coluna]}{" "}
-                <button
-                  onClick={() => {
-                    if (colunaOrdenada === coluna) {
-                      setOrdem((ordem) =>
-                        ordem === "descendente" ? "ascendente" : "descendente"
-                      );
-                    } else {
-                      setColunaOrdenada(coluna);
-                      setOrdem("descendente");
-                    }
-                  }}
-                >
-                  {colunaOrdenada !== coluna || ordem === "descendente"
-                    ? "⬇"
-                    : "⬆"}
-                </button>
-              </label>
-            ))}
-          </div>
-          <div className="classifica-lista">
-            <ul className="classifca-lista-conteudo">
-              {/*tabela.map */}
+          <table>
+            <thead className="classifica-header">
+              <tr>
+                <th>Posição</th>
+                {colunas.map((coluna) => (
+                  <th>
+                    {legenda[coluna]}
+                    <button
+                      onClick={() => {
+                        if (colunaOrdenada === coluna) {
+                          setOrdem((ordem) =>
+                            ordem === "descendente"
+                              ? "ascendente"
+                              : "descendente"
+                          );
+                        } else {
+                          setColunaOrdenada(coluna);
+                          setOrdem("descendente");
+                        }
+                      }}
+                    >
+                      {colunaOrdenada !== coluna || ordem === "descendente"
+                        ? "⬇"
+                        : "⬆"}
+                    </button>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="classifica-lista">
               {dadosOrdenados.map(
                 (time, i) => (
                   escudos.forEach((element) => {
@@ -332,40 +341,22 @@ function App() {
                     }
                   }),
                   (
-                    <li>
-                      <div className="indice-posicao">{i + 1}</div>
-                      <img src={brasao} alt={time.nome} title={time.nome}></img>
-                      <div className="indice-posicao">{time.pontos}</div>
-                      <div className="indice-posicao">{time.jogos}</div>
-                      <div className="indice-posicao">{time.vitorias}</div>
-                      <div className="indice-posicao">{time.derrotas}</div>
-                      <div className="indice-posicao">{time.empates}</div>
-                      <div className="indice-posicao">{time.golsFeitos}</div>
-                      <div className="indice-posicao">{time.golsSofridos}</div>
-                    </li>
+                    <tr>
+                      <td>{i + 1}</td>
+                      <td>{time.nome}</td>
+                      <td>{time.pontos}</td>
+                      <td>{time.jogos}</td>
+                      <td>{time.vitorias}</td>
+                      <td>{time.derrotas}</td>
+                      <td>{time.empates}</td>
+                      <td>{time.golsFeitos}</td>
+                      <td>{time.golsSofridos}</td>
+                    </tr>
                   )
                 )
               )}
-            </ul>
-            {/*
-			<div className="tables">
-        <table className="rounds">
-          <thead>
-            <tr>
-              <th>{rodada}</th>
-            </tr>
-          </thead>
-        </table>
-        <table className="order">
-          <thead>
-            <tr>
-              <th>Posição</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-			*/}
-          </div>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

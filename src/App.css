@@ -11,6 +11,16 @@
   align-items: center;
 }
 
+.cabecalho img{
+	width: 2em;
+	height: 2em;
+}
+
+.cabecalho-1{
+	display: flex;
+	justify-content: flex-end;
+}
+
 .cabecalho button {
   color: white;
   background-color: darkblue;
@@ -40,7 +50,7 @@
 }
 
 .content .rodadas {
-  padding-right: 1em;
+  padding-right: 4.2em;
 }
 
 .rodadas-cabecalho {
@@ -67,7 +77,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 37em;
+  height: 34em;
   width: 25em;
   background-color: white;
   font-weight: bold;
@@ -85,7 +95,7 @@
 .jogos li {
   width: 25em;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .jogos li img {
@@ -94,22 +104,26 @@
 }
 
 .jogos li input {
-  width: 2em;
-  height: 2em;
+  width: 0.8em;
+  height: 1.5em;
   text-align: center;
   border-radius: 1em;
+  font-size: 0.8em;
+  font-weight: bold;
 }
 
 .jogos li .placar {
   display: flex;
   justify-content: space-between;
-  margin-top: 1em;
+  margin-top: 0.2em;
+  font-size: 1.5em;
 }
 
 .jogos li .placar-logado-1{
   display: flex;
   justify-content: space-between;
-  margin-top: 1em;
+  margin-top: 0.2em;
+  font-size: 2em;
 }
 
 body {
@@ -121,15 +135,9 @@ ul {
 }
 
 .classifica-header {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 3em;
-  width: 33.4em;
-  background-color: #2b7148;
-  font-weight: bold;
-  font-size: 18px;
+	background-color: #2b7148;
 }
+  
 
 .classifica-header button {
   border: 0;
@@ -137,49 +145,44 @@ ul {
 }
 
 .classifica-lista {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 28em;
-  width: 30em;
+  height: 650px;
+  width: 600px;
   background-color: white;
   font-weight: bold;
-  font-size: 20px;
 }
 
-.classifca-lista-conteudo {
-  display: flex;
-  flex-wrap: wrap;
-  width: 30em;
-  justify-content: space-around;
-  align-items: center;
+
+table,
+tr,
+td,
+th {
+	border-collapse: collapse;
+	font-size: large;
 }
 
-.classifca-lista-conteudo li {
-  display: flex;
-  width: 30em;
-  justify-content: space-around;
-  align-items: center;
-  padding-right: 1em;
+td,
+th {
+    padding: 0.25em;
 }
 
-.classifca-lista-conteudo li img {
-  width: 1.3em;
-  height: 1.1em;
-  margin-right: 1em;
+tr:nth-child(1){
+	height: 60px;
 }
 
-.classifca-lista-conteudo li .indice-posicao {
-  font-size: 20px;
+td:nth-child(2),
+th:nth-child(2) {
+    text-align: center;
 }
 
 .editar button,
 .check button {
-  background-color: transparent;
-  border: 0;
+ background-color: #2b7148;
+ border-radius: 100%;
+  border: none;
 }
 
 .editar img,
 .check img {
   width: 1em;
+  border: 0;
 }
